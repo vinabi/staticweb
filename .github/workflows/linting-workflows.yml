@@ -1,0 +1,32 @@
+name: linting-workflows
+
+on: # events on which this workflow will triger
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  linting-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Welcome Message
+        run: echo "Welcome to CI Pipeline"
+
+      - name: Clone The Repository
+        uses: actions/checkout@v4
+
+      - name: Installing HTML Linter # https://htmlhint.com/docs/user-guide/getting-started
+        run: npm install --save-dev htmlhint
+
+      - name: Run HTML Linter
+        run: npx htmlhint "**/*.html"
+
+      - name: Install StyleLint # https://stylelint.io/user-guide/rules
+        run: npm install --save-dev stylelint
+
+      - name: Lint CSS Files
+        run: npx stylelint "**/*.css"
